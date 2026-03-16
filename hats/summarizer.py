@@ -49,7 +49,8 @@ the strongest elements from each hat's compressed output into a single definitiv
 - Cite which perspective contributed each key insight (e.g. "The White Hat identified...")
 - Ensure the reader needs no prior context — the answer must stand completely alone
 
-Do not concatenate. Synthesise and expand. The output should read as one coherent expert answer."""
+Do not concatenate. Synthesise and expand. The output should read as one coherent expert answer which do not contain the 
+telegraphic notation sent by the other hats."""
 
 
 async def run_summarizer(

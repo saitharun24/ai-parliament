@@ -11,6 +11,7 @@
 #   7. Store session in memory
 
 from datetime import datetime
+import asyncio
 
 from config import MAX_ITERATIONS, VERBOSE, TOP_N_SOLUTIONS
 from hats.classifier  import classify_query
@@ -19,7 +20,7 @@ from hats.solver      import run_solvers
 from hats.critic      import run_critic
 from hats.judge       import run_judge
 from hats.summarizer  import run_summarizer
-from memory.learnings import get_learnings_summary, load_hat_learnings, update_learnings_from_session
+from memory.learnings import get_learnings_summary, update_learnings_from_session
 from memory.store     import (
     retrieve_hints, format_hints_for_context, store_result,
     retrieve_cached_solutions, store_atomic_solutions,
@@ -262,12 +263,13 @@ async def run(query: str) -> str:
     # Update learnings from this session if it was a good one
     top_score = ranked[0]["score"] if ranked else 0.0
     t = _tick()
-    await update_learnings_from_session(
+    asyncio.ensure_future(update_learnings_from_session(
         domain=domain,
         solutions=ranked,
         critiqued_solutions=last_critiqued,
         top_score=top_score,
-    )
+    ))
+    timings["learnings"] = 0.0
     timings["learnings"] = _tock("learnings update", t)
 
     elapsed = (datetime.now() - start).total_seconds()

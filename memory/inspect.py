@@ -120,7 +120,7 @@ def cmd_sessions(limit: int = 20):
 
     results = col.get(
         limit=min(limit, col.count()),
-        include=["metadatas", "ids"],
+        include=["metadatas"],
     )
 
     ids   = results["ids"]
@@ -158,7 +158,7 @@ def cmd_cache(limit: int = 20):
 
     results = col.get(
         limit=min(limit, col.count()),
-        include=["metadatas", "documents", "ids"],
+        include=["metadatas", "documents"],
     )
 
     ids   = results["ids"]
@@ -198,7 +198,7 @@ def cmd_search(query: str):
 
     results = col.get(
         limit=col.count(),
-        include=["metadatas", "documents", "ids"],
+        include=["metadatas", "documents"],
     )
 
     ids   = results["ids"]
@@ -238,7 +238,7 @@ def cmd_session(id_prefix: str):
 
     results = col.get(
         limit=col.count(),
-        include=["metadatas", "documents", "ids"],
+        include=["metadatas", "documents"],
     )
 
     match = None
